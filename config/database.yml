@@ -1,0 +1,23 @@
+development:
+  adapter: mysql2
+  host: localhost
+  database: db_dev
+  username: root
+  password: '1'
+
+test:
+  adapter: mysql2
+  host: localhost
+  database: db_test
+  username: root
+  password: '1'
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  host: ec2-54-83-43-118.compute-1.amazonaws.com
+  database: db5ifutiqicdar
+  pool: 5
+  port: 5432
+  username: exiedlzjzsrhty
+  password: Bn67zHo6Efg-AIzGp1VvzWBk-q
