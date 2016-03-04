@@ -30,6 +30,7 @@
               </div>
             </div>
               <hr />
+              <%= render partial: 'shared/alerts' %>
               <%= yield %>
 
 
@@ -39,12 +40,19 @@
     </div>
     <!-- /#page-content-wrapper -->
   </div>
-
   <!-- Menu Toggle Script -->
   <script>
-    $("#menu-toggle").click(function(e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
+    $(function() {
+      var errors = '<%= flash[:alert] %>';
+      var info = '<%= flash[:notice] %>';
+
+      if (errors != '') showError(errors);
+      if (info != '') showInfo(info);
+
+      $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+      });
     });
   </script>
 

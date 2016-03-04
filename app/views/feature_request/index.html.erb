@@ -9,3 +9,127 @@
   </ul>
 <% end %>
 
+<div class="row">
+  <div class="col-lg-12">
+    <div class="form-inline">
+
+      <div class="form-group">
+        <%= label_tag :date_from, 'Date from:' %>
+        <div class="input-group date">
+          <%= text_field_tag :birth_date, '', class: 'form-control', placeholder: 'Date from' %>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag :client, 'Select Client' %>
+        <%= select_tag :client, options_for_select(@clients, @selected_client), class: 'form-control', autofocus: true %>
+      </div>
+
+      <div class="form-group">
+        <%= button_tag 'Show', class: 'btn btn-lg btn-primary' %>
+        <%= button_tag 'Create Request', class: 'btn btn-lg btn-primary add' %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="modal_popup" class="modal fade" tabindex="-1">
+  <div class="vertical-alignment-helper">
+    <div class="modal-dialog vertical-align-center">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Feature Request</h4>
+        </div>
+
+        <div class="modal-body">
+          <%= form_for(@feature_request, as: 'frm_feature_request', url: '/features/update') do |f| %>
+            <%= f.hidden_field(:id) %>
+
+            <div class="form-group">
+              <%= f.label :title, 'Title' %>
+              <%= f.text_field :title, class: 'form-control', placeholder: 'Title', required: true %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :description, 'Description' %>
+              <%= f.text_area :description, class: 'form-control', placeholder: 'Description' %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :title, 'Client' %>
+              <%= f.select :client_id, options_for_select(@clients[1..-1], @selected_client), {}, class: 'form-control' %>
+            </div>
+
+            <div class="row">
+
+              <div class="form-group col-lg-6">
+                <%= f.label :title, 'Client Priority' %>
+                <%= f.select :client_priority, [], {}, class: 'form-control' %>
+              </div>
+
+              <div class="form-group col-lg-6">
+                <%= f.label :title, 'Target Date' %>
+                <div class="input-group date">
+                  <%= f.text_field :target_date, class: 'form-control', placeholder: 'Date from', required: true %>
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :url, 'Ticket Url' %>
+              <%= f.text_field :url, class: 'form-control', placeholder: 'Ticket Url' %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :title, 'Product Area' %>
+              <%= f.select :product_id, options_for_select(@products, nil), {}, class: 'form-control' %>
+            </div>
+
+            <%= f.submit 'Submit', class: 'btn btn-lg btn-primary btn-block' %>
+
+          <% end %>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="application/javascript">
+  $(function() {
+    $('.date').datepicker({});
+    $('.add').on('click', function() {
+      openModal($('#modal_popup', function() { setTimeout(function() { $('#frm_feature_request_title').focus(); }, 500)  }))
+    });
+    $('#frm_feature_request_client_id').on('change', populatePriority);
+
+    populatePriority();
+  });
+
+  function populatePriority() {
+    $('#frm_feature_request_client_priority').empty();
+
+    if ($('#frm_feature_request_client_id').val() != '') {
+      var data = splitClientId($('#frm_feature_request_client_id').val());
+      for (var number = 1; number <= data.priority; number++) {
+        $('#frm_feature_request_client_priority').append('<option value="' + number + '">' + number + '</option>')
+      }
+    }
+  }
+
+  function splitClientId(value) {
+    if (value == null || value.indexOf(':') < 0) return null;
+    var separatorIndex = value.indexOf(':');
+    return { id: parseInt(value.substr(0, separatorIndex)), priority: parseInt(value.substr(separatorIndex + 1)) };
+  }
+</script>

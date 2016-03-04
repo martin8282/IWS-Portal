@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  get 'features' => 'feature_request#index'
   get 'home' => 'home#index', as: 'home'
+
+  get 'features' => 'feature_request#index'
+  post 'features/update' => 'feature_request#update'
 
   devise_for :users, controllers: { sessions: 'sessions' }
 

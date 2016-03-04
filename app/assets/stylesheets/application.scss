@@ -2,3 +2,16 @@
 @import "bootstrap";
 @import "font-awesome-sprockets";
 @import "font-awesome";
+
+.input-group-addon {
+  cursor: pointer;
+}
+
+.form-group {
+  padding-right: 10px;
+
+  button {
+    margin-right: 10px;
+    min-width: 100px;
+  }
+}
