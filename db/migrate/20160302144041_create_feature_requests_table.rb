@@ -16,13 +16,14 @@ class CreateFeatureRequestsTable < ActiveRecord::Migration
       t.integer :client_priority, null: false
       t.date :target_date
       t.string :url, limit: 512
-      t.date :created_at
+      t.datetime :created_at
       t.integer :created_by
-      t.date :updated_at
+      t.datetime :updated_at
       t.integer :updated_by
     end
 
     add_index :feature_requests, :client_id
     add_index :feature_requests, :product_id
+    add_index :feature_requests, :client_priority
   end
 end

@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  # rescue_from Exception, with: :handle_exception
 
   before_action :set_current_user
 
@@ -37,5 +38,9 @@ class ApplicationController < ActionController::Base
     else
       object.send("#{attribute}=", value)
     end
+  end
+
+  def handle_exception
+    flash[:alert] = 'Sorry, server error occurred'
   end
 end

@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   get 'home' => 'home#index', as: 'home'
 
   get 'features' => 'feature_request#index'
+  get 'features/list' => 'feature_request#list'
+  get 'features/details' => 'feature_request#details'
   post 'features/update' => 'feature_request#update'
 
   devise_for :users, controllers: { sessions: 'sessions' }

@@ -27,13 +27,15 @@
               </div>
               <div class="col-lg-10 text-right">
                 <h1>IWS Portal</h1>
+                <% if controller.user_signed_in? %>
+                  User: <%= controller.current_user.user_name %>&nbsp;|&nbsp;
+                  <%= link_to('Sign Out', destroy_user_session_path) %>
+                <% end %>
               </div>
             </div>
               <hr />
               <%= render partial: 'shared/alerts' %>
               <%= yield %>
-
-
           </div>
         </div>
       </div>
